@@ -1,0 +1,106 @@
+:root {
+  --black: #161623;
+  --white: #ffff;
+  --red: rgb(222, 11, 24);
+  --outfit: "Outfit", sans-serif;
+}
+
+/* Location Container Component */
+#team {
+  background-color: var(--black) !important;
+  padding: 100px 0 80px !important;
+  font-family: var(--outfit) !important;
+}
+
+.team-title span:nth-child(1) {
+  color: var(--white) !important;
+  font-weight: 700 !important;
+  font-size: 42px !important;
+  line-height: 51px !important;
+}
+
+.team-title span:nth-child(2) {
+  color: var(--red) !important;
+  font-weight: 700 !important;
+  line-height: 51px !important;
+  font-size: 42px !important;
+}
+
+/* Testimonials */
+
+.testimonials-container {
+  width: 100% !important;
+  background: url(../img/Testimonials.png) !important;
+  padding: 120px 0px !important;
+}
+
+.testimonial-wrapper {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 40px !important;
+}
+
+.testimonial-card {
+  position: relative !important;
+  width: 300px !important;
+  background-color: white !important;
+  padding: 30px !important;
+  text-align: center !important;
+}
+
+.quote-corner::before {
+  content: "❞" !important;
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: 60px !important;
+  height: 60px !important;
+  background-color: red !important;
+  color: white !important;
+  padding: 40px !important;
+  font-size: 32px !important;
+  font-weight: bold !important;
+  border-bottom-left-radius: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.user-image {
+  margin-top: 10px !important;
+}
+
+.user-image img {
+  width: 70px !important;
+  height: 70px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important;
+}
+
+.user-name {
+  margin-top: 15px !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+}
+
+.user-role {
+  font-size: 14px !important;
+  color: #666 !important;
+  margin-bottom: 10px !important;
+}
+
+.stars {
+  color: #ffc107 !important;
+  font-size: 18px !important;
+  margin-bottom: 15px !important;
+}
+
+.testimonial-text {
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  margin: 0 0 30px !important;
+  color: gray !important;
+  line-height: 28px !important;
+}

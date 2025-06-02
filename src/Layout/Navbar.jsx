@@ -120,7 +120,11 @@ const Navbar = () => {
                       </a>
                       <ul className="sub-menu position-absolute list-unstyled">
                         <li>
-                          <a href="#" className="dropdown-item">
+                          <a
+                            href="#"
+                            className="dropdown-item"
+                            onClick={() => navigate("/orlando")}
+                          >
                             <i className="fa-solid fa-greater-than"></i>
                             Orlando
                           </a>
@@ -150,7 +154,13 @@ const Navbar = () => {
                       </a>
                       <ul className="sub-menu position-absolute list-unstyled">
                         <li>
-                          <a href="#" className="dropdown-item">
+                          <a
+                            href="#"
+                            className="dropdown-item"
+                            onClick={() =>
+                              navigate("/concrete-delivery-service")
+                            }
+                          >
                             <i className="fa-solid fa-greater-than"></i>
                             Concrete Delivery Areas
                           </a>
@@ -339,12 +349,20 @@ const Navbar = () => {
                     </li>
 
                     <li>
-                      <a href="#" className="nav-link text-decoration-none">
+                      <a
+                        href="#"
+                        className="nav-link text-decoration-none"
+                        onClick={() => navigate("/contact-us")}
+                      >
                         Contact Us
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="nav-link text-decoration-none">
+                      <a
+                        href="#"
+                        className="nav-link text-decoration-none"
+                        onClick={() => navigate("/login")}
+                      >
                         Login / Sign Up
                       </a>
                     </li>

@@ -164,7 +164,8 @@ ul {
   text-transform: none !important;
   font-weight: 700 !important;
   position: relative !important;
-  padding: 8px 20px !important;
+  padding: 4px 19px !important;
+  /* padding: 8px 20px !important; */
 }
 
 .dropdown-item i {

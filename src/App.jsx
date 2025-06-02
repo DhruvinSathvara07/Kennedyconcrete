@@ -4,6 +4,9 @@ import Layout from "./Layout/Layout";
 import Home from "./Views/Pages/Home/Home";
 import "./assets/CSS/style.css";
 import "./assets/CSS/About.css";
+import "./assets/CSS/Contact.css";
+import "./assets/CSS/Login.css";
+import "./assets/CSS/Location.css";
 import Buildingmaterials from "./Views/Pages/Service/Buildingmaterials/Buildingmaterials";
 import PreferredContractors from "./Views/Pages/Service/PreferredContractors/PreferredContractors";
 import Sidewalk from "./Views/Pages/Service/ConcreteProjects/Sidewalk/Sidewalk";
@@ -13,48 +16,69 @@ import CellFill from "./Views/Pages/Service/ConcreteProjects/CellFill/CellFill";
 import Commercial from "./Views/Pages/Service/ConcreteProjects/Commercial/Commercial";
 import ShotCreate from "./Views/Pages/Service/ConcreteProjects/ShotCreate/ShotCreate";
 import DecorativeConcrete from "./Views/Pages/Service/ConcreteProjects/DecorativeConcrete/DecorativeConcrete";
-import InstantQuote from "./Views/Pages/InstantQuote_and_Order/InstantQuote";
+import InstantQuote from "./Views/Pages/Homeowners/InstantQuote_and_Order/InstantQuote";
 import Driver from "./Views/Pages/About/DriverJobs/Driver";
+import ConcreteDeliveryService from "./Views/Pages/Service/ConcreteDeliveryService/ConcreteDeliveryService";
+import Contact from "./Views/Pages/Contact/Contact";
+import Login from "./Views/Pages/Login/Login";
+import Location from "./Views/Pages/Locations/Orlando/Location";
 function App() {
   return (
     <>
       <Router>
-        <Layout>
-          <Routes>
-            {/* HomePage Routes */}
+        <Routes>
+          {/* Route without Layout */}
 
-            <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          {/* All other routes with Layout */}
+          <Route
+            path="*"
+            element={
+              <Layout>
+                <Routes>
+                  {/* HomePage */}
+                  <Route path="/" element={<Home />} />
 
-            {/* AboutPage Routes */}
+                  {/* AboutPage */}
+                  <Route path="/driver-jobs" element={<Driver />} />
 
-            <Route path="/driver-jobs" element={<Driver />} />
+                  {/* ServicePage */}
+                  <Route
+                    path="/concrete-delivery-service"
+                    element={<ConcreteDeliveryService />}
+                  />
+                  <Route path="/sidewalk" element={<Sidewalk />} />
+                  <Route path="/driveway" element={<Driveway />} />
+                  <Route path="/slab" element={<Slab />} />
+                  <Route path="/cell-fill" element={<CellFill />} />
+                  <Route path="/commercial" element={<Commercial />} />
+                  <Route path="/shotcrete" element={<ShotCreate />} />
+                  <Route
+                    path="/decorative-concrete"
+                    element={<DecorativeConcrete />}
+                  />
+                  <Route
+                    path="/construction-building-materials"
+                    element={<Buildingmaterials />}
+                  />
+                  <Route
+                    path="/preferred-contractors"
+                    element={<PreferredContractors />}
+                  />
 
-            {/* ServicePage Routes */}
+                  {/* Location */}
+                  <Route path="/orlando" element={<Location />} />
 
-            <Route
-              path="/construction-building-materials"
-              element={<Buildingmaterials />}
-            />
-            <Route
-              path="/preferred-contractors"
-              element={<PreferredContractors />}
-            />
-            {/* Servicepage ConcreteDropdown Routes */}
-            <Route path="/sidewalk" element={<Sidewalk />} />
-            <Route path="/driveway" element={<Driveway />} />
-            <Route path="/slab" element={<Slab />} />
-            <Route path="/cell-fill" element={<CellFill />} />
-            <Route path="/commercial" element={<Commercial />} />
-            <Route path="/shotcrete" element={<ShotCreate />} />
-            <Route
-              path="/decorative-concrete"
-              element={<DecorativeConcrete />}
-            />
+                  {/* HomeownersPage */}
+                  <Route path="/instance-quote" element={<InstantQuote />} />
 
-            {/* Instance Quoute */}
-            <Route path="/instance-quote" element={<InstantQuote />} />
-          </Routes>
-        </Layout>
+                  {/* ContactPage */}
+                  <Route path="/contact-us" element={<Contact />} />
+                </Routes>
+              </Layout>
+            }
+          />
+        </Routes>
       </Router>
     </>
   );

@@ -152,7 +152,7 @@ const Section1 = () => {
                             </label>
                             <input
                               type="text"
-                              className="form-control"
+                              className="form-control input"
                               id="firstName"
                               {...register("firstName")}
                             />
@@ -164,7 +164,7 @@ const Section1 = () => {
                             </label>
                             <input
                               type="text"
-                              className="form-control"
+                              className="form-control input"
                               id="lastName"
                               {...register("lastName")}
                             />
@@ -176,7 +176,7 @@ const Section1 = () => {
                             </label>
                             <input
                               type="email"
-                              className="form-control"
+                              className="form-control input"
                               id="email"
                               {...register("email", {
                                 required:
@@ -198,7 +198,7 @@ const Section1 = () => {
                               Project Overview
                             </label>
                             <textarea
-                              className="form-control"
+                              className="form-control input"
                               id="projectOverview"
                               rows="3"
                               {...register("projectOverview", {

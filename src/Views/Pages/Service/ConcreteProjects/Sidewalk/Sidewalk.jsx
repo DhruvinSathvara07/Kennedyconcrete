@@ -7,6 +7,8 @@ const Sidewalk = () => {
       <Hero title={"Sidewalk"} />
 
       <VideoCard
+        padding={"mt-5 mb-5"}
+        className="d-flex justify-content-center align-items-center"
         video_link={"https://www.youtube.com/embed/5zbd0QCdKm8"}
         video_text={"SIDEWALK"}
         video_title={"Elevate Your Sidewalk with Kennedy Concrete Solutions"}
