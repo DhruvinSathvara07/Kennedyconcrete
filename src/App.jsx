@@ -7,6 +7,7 @@ import "./assets/CSS/About.css";
 import "./assets/CSS/Contact.css";
 import "./assets/CSS/Login.css";
 import "./assets/CSS/Location.css";
+import "./assets/CSS/Blogs.css";
 import Buildingmaterials from "./Views/Pages/Service/Buildingmaterials/Buildingmaterials";
 import PreferredContractors from "./Views/Pages/Service/PreferredContractors/PreferredContractors";
 import Sidewalk from "./Views/Pages/Service/ConcreteProjects/Sidewalk/Sidewalk";
@@ -22,6 +23,8 @@ import ConcreteDeliveryService from "./Views/Pages/Service/ConcreteDeliveryServi
 import Contact from "./Views/Pages/Contact/Contact";
 import Login from "./Views/Pages/Login/Login";
 import Location from "./Views/Pages/Locations/Orlando/Location";
+import Blogs from "./Views/Pages/About/Blogs/Blogs";
+import BlogCard from "./Views/Components/BlogCard/BlogCard";
 function App() {
   return (
     <>
@@ -40,6 +43,8 @@ function App() {
                   <Route path="/" element={<Home />} />
 
                   {/* AboutPage */}
+                  <Route path="/blog" element={<Blogs />} />
+                  <Route path="/blogs/:pageNumber" element={<BlogCard />} />
                   <Route path="/driver-jobs" element={<Driver />} />
 
                   {/* ServicePage */}

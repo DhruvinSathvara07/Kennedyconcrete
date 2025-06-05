@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+
 const Section1 = () => {
   const {
     register,
@@ -30,14 +31,15 @@ const Section1 = () => {
       alert("An error occurred: " + error.message);
     }
   };
+
   return (
     <>
       <section>
         <div className="container-fluid" id="preferredcontractors">
           <div className="d-flex flex-column justify-content-center align-items-center">
-            <div className="container gap">
+            <div className="container gap main-container">
               <div className="row">
-                <div className="col-lg-12 main-container">
+                <div className="col-lg-12">
                   <h2 className="text-center contract_title">
                     <strong>
                       Find Your Expert Concrete Project Team with
@@ -54,7 +56,7 @@ const Section1 = () => {
                     designed to connect you with a network of trusted and
                     skilled professionals in all aspects of concrete
                     construction. From pump operators to concrete finishers,
-                    we’ve got you covered.
+                    we've got you covered.
                   </p>
 
                   <h4>
@@ -235,7 +237,7 @@ const Section1 = () => {
                     your concrete projects. Providing the concrete is just the
                     start; pairing you with the right team of concrete
                     contractors for pumping, finishing, and more is our
-                    commitment to ensuring your project’s success.
+                    commitment to ensuring your project's success.
                   </p>
 
                   <h4>
@@ -246,7 +248,7 @@ const Section1 = () => {
 
                   <p>
                     Let us take the guesswork out of assembling your project
-                    team. With Kennedy Concrete’s Preferred Concrete Contractors
+                    team. With Kennedy Concrete's Preferred Concrete Contractors
                     program, you gain access to a network of professionals ready
                     to bring quality, efficiency, and excellence to your next
                     project.
@@ -257,10 +259,10 @@ const Section1 = () => {
                       height="641"
                       src="https://www.youtube.com/embed/rVA7zlOFPbc"
                       title="Need Concrete Finishers or Pumpers? Kennedy Concrete Has You Covered!"
-                      frameborder="0"
+                      frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      referrerpolicy="strict-origin-when-cross-origin"
-                      allowfullscreen
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
                     ></iframe>
                   </div>
                 </div>

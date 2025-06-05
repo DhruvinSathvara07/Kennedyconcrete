@@ -92,7 +92,11 @@ const Navbar = () => {
                       </a>
                       <ul className="sub-menu position-absolute list-unstyled">
                         <li>
-                          <a href="#" className="dropdown-item">
+                          <a
+                            href="#"
+                            className="dropdown-item"
+                            onClick={() => navigate("/blog")}
+                          >
                             <i className="fa-solid fa-greater-than"></i>Blog
                           </a>
                         </li>
