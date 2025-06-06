@@ -394,9 +394,9 @@ const Navbar = () => {
                   aria-controls="mobileNavbar"
                 >
                   <span className="navbar-toggler-icon">
+                    {/* <span></span>
                     <span></span>
-                    <span></span>
-                    <span></span>
+                    <span></span> */}
                   </span>
                 </button>
               </div>
@@ -450,6 +450,7 @@ const Navbar = () => {
               <ul className="mobile-menu list-unstyled m-0">
                 <li className="mobile-menu-item">
                   <a
+                    onClick={() => navigate("/")}
                     href="#"
                     className="mobile-nav-link d-flex align-items-center"
                   >
@@ -477,13 +478,21 @@ const Navbar = () => {
                   <div className="collapse" id="aboutSubmenu">
                     <ul className="mobile-submenu list-unstyled">
                       <li>
-                        <a href="#" className="mobile-submenu-link">
+                        <a
+                          href="#"
+                          onClick={() => navigate("/blog")}
+                          className="mobile-submenu-link"
+                        >
                           <span className="submenu-arrow">›</span>
                           <span>Blog</span>
                         </a>
                       </li>
                       <li>
-                        <a href="#" className="mobile-submenu-link">
+                        <a
+                          href="#"
+                          onClick={() => navigate("/driver-jobs")}
+                          className="mobile-submenu-link"
+                        >
                           <span className="submenu-arrow">›</span>
                           <span>Driver Jobs</span>
                         </a>
@@ -511,7 +520,11 @@ const Navbar = () => {
                   <div className="collapse" id="locationsSubmenu">
                     <ul className="mobile-submenu list-unstyled">
                       <li>
-                        <a href="#" className="mobile-submenu-link">
+                        <a
+                          href="#"
+                          // onClick={() => navigate("/orlando")}
+                          className="mobile-submenu-link"
+                        >
                           <span className="submenu-arrow">›</span>
                           <span>Orlando</span>
                         </a>
@@ -551,7 +564,11 @@ const Navbar = () => {
                   <div className="collapse" id="servicesSubmenu">
                     <ul className="mobile-submenu list-unstyled">
                       <li>
-                        <a href="#" className="mobile-submenu-link">
+                        <a
+                          href="#"
+                          onClick={() => navigate("/concrete-delivery-service")}
+                          className="mobile-submenu-link"
+                        >
                           <span className="submenu-arrow">›</span>
                           <span>Concrete Delivery Areas</span>
                         </a>
@@ -577,6 +594,7 @@ const Navbar = () => {
                           <ul className="mobile-nested-submenu list-unstyled">
                             <li>
                               <a
+                                onClick={() => navigate("/sidewalk")}
                                 href="#"
                                 className="mobile-nested-submenu-link"
                               >
@@ -586,6 +604,7 @@ const Navbar = () => {
                             </li>
                             <li>
                               <a
+                                onClick={() => navigate("/driveway")}
                                 href="#"
                                 className="mobile-nested-submenu-link"
                               >
@@ -595,6 +614,7 @@ const Navbar = () => {
                             </li>
                             <li>
                               <a
+                                onClick={() => navigate("/slab")}
                                 href="#"
                                 className="mobile-nested-submenu-link"
                               >
@@ -604,6 +624,7 @@ const Navbar = () => {
                             </li>
                             <li>
                               <a
+                                onClick={() => navigate("/cell-fill")}
                                 href="#"
                                 className="mobile-nested-submenu-link"
                               >
@@ -613,6 +634,7 @@ const Navbar = () => {
                             </li>
                             <li>
                               <a
+                                onClick={() => navigate("/commercial")}
                                 href="#"
                                 className="mobile-nested-submenu-link"
                               >
@@ -622,6 +644,7 @@ const Navbar = () => {
                             </li>
                             <li>
                               <a
+                                onClick={() => navigate("/shotcrete")}
                                 href="#"
                                 className="mobile-nested-submenu-link"
                               >
@@ -631,6 +654,7 @@ const Navbar = () => {
                             </li>
                             <li>
                               <a
+                                onClick={() => navigate("/decorative-concrete")}
                                 href="#"
                                 className="mobile-nested-submenu-link"
                               >
@@ -735,7 +759,11 @@ const Navbar = () => {
                         </a>
                       </li>
                       <li>
-                        <a href="#" className="mobile-submenu-link">
+                        <a
+                          href="#"
+                          onClick={() => navigate("/instance-quote")}
+                          className="mobile-submenu-link"
+                        >
                           <span className="submenu-arrow">›</span>
                           <span>Instant Quote and Ordering</span>
                         </a>
@@ -746,6 +774,7 @@ const Navbar = () => {
                 <li className="mobile-menu-item">
                   <a
                     href="#"
+                    onClick={() => navigate("/contact-us")}
                     className="mobile-nav-link d-flex align-items-center"
                   >
                     <span className="menu-arrow">›</span>

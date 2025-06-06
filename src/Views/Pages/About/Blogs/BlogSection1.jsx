@@ -13,19 +13,20 @@ const BlogSection1 = () => {
               <div className="col-xxl-8 col-lg-7">
                 <BlogCard />
               </div>
-              {/* <div className="col-xxl-4 col-lg-5">
+              <div className="col-xxl-4 col-lg-5">
                 <div className="slidebar-area">
                   <form>
                     <label htmlFor="search" className="search-label">
                       Search
                     </label>
+                    <div className="search-underline"></div>
                     <div className="d-flex mt-3">
                       <input type="text" className="inputarea" />
-                      <button>Search</button>
+                      <button className="search-btn">Search</button>
                     </div>
                   </form>
                 </div>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>

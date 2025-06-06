@@ -72,7 +72,7 @@ function App() {
                   />
 
                   {/* Location */}
-                  <Route path="/orlando" element={<Location />} />
+                  {/* <Route path="/orlando" element={<Location />} /> */}
 
                   {/* HomeownersPage */}
                   <Route path="/instance-quote" element={<InstantQuote />} />

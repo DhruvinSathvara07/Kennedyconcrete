@@ -46,6 +46,14 @@
   gap: 30px 20px !important;
 }
 
+@media (max-width:574px) {
+  .cards {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+}
+
 .cards h6 {
   font-size: 20px !important;
   font-weight: 500 !important;

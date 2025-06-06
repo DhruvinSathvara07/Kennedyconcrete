@@ -1,20 +1,34 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import Hero from "../../../Components/Hero/Hero";
 import VideoCard from "../../../Components/VideoCard/VideoCard";
 
 const InstantQuote = () => {
+  const [videoText, setVideoText] = useState("");
+
+  const fetchingInstantQuaote = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/instant");
+      setVideoText(response.data[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchingInstantQuaote();
+  }, []);
+
   return (
     <>
-      <Hero title={"Instant Quote and Order"} />
+      <Hero title={videoText.Herotitle} />
 
       <VideoCard
         video_link={"https://www.youtube.com/embed/e10NtXagn0I"}
-        video_text={"Ready for your project?"}
-        video_title={"Instant Quote and Order Concrete"}
-        video_para={
-          "Get an instant quote and place your order online with Kennedy Concrete. Our easy-to-use system ensures a hassle-free experience, providing quick, reliable, and tailored concrete delivery solutions for your Florida project."
-        }
-        btn_text={"Contact Us"}
+        video_text={videoText.subtitle}
+        video_title={videoText.title}
+        video_para={videoText.text}
+        btn_text={videoText.btntext}
       />
     </>
   );
