@@ -5,6 +5,7 @@ import icon3 from "../../../assets/img/serviceicon3.svg";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/autoplay";
+import LazyYouTube from "../../Components/LazyYouTube/LazyYouTube";
 
 const Team = () => {
   const services = [
@@ -147,18 +148,8 @@ const Team = () => {
                   className="col-md-6 col-12  d-flex flex-column justify-content-center align-items-center video-section"
                   id="video-section"
                 >
-                  <iframe
-                    width="550"
-                    height="309"
-                    className="iframe-part"
-                    src="https://www.youtube.com/embed/s2-osIOjOy8"
-                    title="Kennedy Concrete Expands to Brevard County: Meet Our New Manager, Lonnie Hillery!"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                  ></iframe>
 
+                  <LazyYouTube videoId="s2-osIOjOy8" title="Kennedy Concrete Expands to Brevard County" />
                   <h2 className="text-light">
                     Lonnie, General Manager, Orlando and Brevard
                   </h2>
@@ -167,17 +158,8 @@ const Team = () => {
                   className="col-md-6 col-12 d-flex flex-column justify-content-center align-items-center video-section"
                   id="video-section"
                 >
-                  <iframe
-                    className="iframe-part"
-                    width="550"
-                    height="309"
-                    src="https://www.youtube.com/embed/Nln6hcJJSyg"
-                    title="Wrapping Up A Commercial Job for Salem&#39;s Fresh Eats | Kennedy Concrete Tampa"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                  ></iframe>
+                  <LazyYouTube videoId="Nln6hcJJSyg" title="Wrapping Up A Commercial Job for Salem" />
+
                   <h2 className="text-light">
                     Jeff, General Manager, Tampa and Ocala
                   </h2>
@@ -188,17 +170,8 @@ const Team = () => {
                   className="col-md-6 col-12 d-flex flex-column justify-content-center align-items-center video-section"
                   id="video-section"
                 >
-                  <iframe
-                    width="550"
-                    height="309"
-                    className="iframe-part"
-                    src="https://www.youtube.com/embed/rmxda74qUg8"
-                    title="Meet our Plant Manager, Latisha!"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                  ></iframe>
+                  <LazyYouTube videoId="rmxda74qUg8" title="Meet our Plant Manager, Latisha!" />
+
                   <h2 className="text-light text-center">
                     Latisha, Plant Manager, Orlando
                   </h2>
@@ -207,17 +180,8 @@ const Team = () => {
                   className="col-md-6 col-12 d-flex flex-column justify-content-center align-items-center video-section"
                   id="video-section"
                 >
-                  <iframe
-                    width="550"
-                    height="309"
-                    className="iframe-part"
-                    src="https://www.youtube.com/embed/SEReegQnG6w"
-                    title="Exclusive Discounts for First Responders at Kennedy Concrete"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                  ></iframe>
+                  <LazyYouTube videoId="SEReegQnG6w" title="Exclusive Discounts for First Responders" />
+
                   <h2 className="text-light text-center">
                     Andy, Dispatch Manager
                   </h2>
