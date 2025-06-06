@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
-import Button from "../../Components/Buttons/Button";
+import React, { useEffect, useState, useCallback, useMemo, useRef } from "react";
+import Button from "../../../Views/Components/Buttons/Button";
 import SliderImg from "../../../assets/img/Slider1.png";
 import SliderImg2 from "../../../assets/img/Slider.png";
 import SliderImg3 from "../../../assets/img/Slider3.png";
@@ -44,23 +42,41 @@ const slides = [
 export default function Slider() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [animate, setAnimate] = useState(true);
+  const [imagesLoaded, setImagesLoaded] = useState(new Set());
+  const intervalRef = useRef(null);
 
+  // Preload images for better performance
   useEffect(() => {
-    AOS.init({ duration: 800 });
+    slides.forEach((slide, index) => {
+      const img = new Image();
+      img.onload = () => {
+        setImagesLoaded(prev => new Set([...prev, index]));
+      };
+      img.src = slide.image;
+    });
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setAnimate(false);
-      setTimeout(() => {
-        setCurrentSlide((prev) => (prev + 1) % slides.length);
-        setAnimate(true);
-      }, 200);
-    }, 4500);
-    return () => clearInterval(interval);
+  // Memoized slide advance function
+  const advanceSlide = useCallback(() => {
+    setAnimate(false);
+    setTimeout(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+      setAnimate(true);
+    }, 200);
   }, []);
 
-  const handleDotClick = (index) => {
+  // Auto-advance with cleanup
+  useEffect(() => {
+    intervalRef.current = setInterval(advanceSlide, 4500);
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [advanceSlide]);
+
+  // Optimized dot click handler
+  const handleDotClick = useCallback((index) => {
     if (index !== currentSlide) {
       setAnimate(false);
       setTimeout(() => {
@@ -68,7 +84,10 @@ export default function Slider() {
         setAnimate(true);
       }, 200);
     }
-  };
+  }, [currentSlide]);
+
+  // Memoized current slide data
+  const currentSlideData = useMemo(() => slides[currentSlide], [currentSlide]);
 
   return (
     <>
@@ -78,7 +97,16 @@ export default function Slider() {
             key={index}
             className={`slide ${index === currentSlide ? "active" : ""}`}
           >
-            <img src={slide.image} alt={`Slide ${index + 1}`} />
+            <img
+              src={slide.image}
+              alt={`Slide ${index + 1}`}
+              loading={index === 0 ? "eager" : "lazy"}
+              decoding="async"
+              style={{
+                opacity: imagesLoaded.has(index) ? 1 : 0,
+                transition: 'opacity 0.3s ease'
+              }}
+            />
           </div>
         ))}
 
@@ -87,13 +115,13 @@ export default function Slider() {
             className={animate ? "slide-in-right" : "slide-out-left"}
             style={{ animationDelay: "0.2s" }}
           >
-            {slides[currentSlide].title}
+            {currentSlideData.title}
           </h1>
           <p
             className={animate ? "slide-in-right" : "slide-out-left"}
             style={{ animationDelay: "0.4s" }}
           >
-            {slides[currentSlide].description}
+            {currentSlideData.description}
           </p>
           <div
             className={animate ? "slide-in-right" : "slide-out-left"}
@@ -116,50 +144,15 @@ export default function Slider() {
               key={index}
               className={`dot ${index === currentSlide ? "active" : ""}`}
               onClick={() => handleDotClick(index)}
+              role="button"
+              tabIndex={0}
+              aria-label={`Go to slide ${index + 1}`}
             >
               {index === currentSlide && <span className="ring" />}
             </span>
           ))}
         </div>
       </div>
-
-      <style jsx>{`
-        .slide-in-right {
-          animation: slideInRight 0.8s ease-out forwards;
-        }
-
-        .slide-out-left {
-          animation: slideOutLeft 0.2s ease-in forwards;
-        }
-
-        @keyframes slideInRight {
-          from {
-            opacity: 0;
-            transform: translateX(-50px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-
-        @keyframes slideOutLeft {
-          from {
-            opacity: 1;
-            transform: translateX(0);
-          }
-          to {
-            opacity: 0;
-            transform: translateX(-30px);
-          }
-        }
-
-        .slide-content h1,
-        .slide-content p,
-        .slide-content div {
-          animation-fill-mode: both;
-        }
-      `}</style>
     </>
   );
 }
