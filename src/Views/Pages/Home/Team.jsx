@@ -30,6 +30,26 @@ const Team = () => {
       text: "All products go through rigorous quality checks, ensuring you get the best materials for your projects every time.",
     },
   ];
+
+  const teamVideos = [
+    {
+      videoId: "s2-osIOjOy8",
+      title: "Lonnie, General Manager, Orlando and Brevard",
+    },
+    {
+      videoId: "Nln6hcJJSyg",
+      title: "Jeff, General Manager, Tampa and Ocala",
+    },
+    {
+      videoId: "rmxda74qUg8",
+      title: "Latisha, Plant Manager, Orlando",
+    },
+    {
+      videoId: "SEReegQnG6w",
+      title: "Andy, Dispatch Manager",
+    },
+  ];
+
   // const sliderRef = useRef(null);
 
   // useEffect(() => {
@@ -144,48 +164,16 @@ const Team = () => {
           <div className="container-fluid d-flex justify-content-center align-item-center w-100">
             <div className="container">
               <div className="row d-flex w-100">
-                <div
-                  className="col-md-6 col-12  d-flex flex-column justify-content-center align-items-center video-section"
-                  id="video-section"
-                >
-
-                  <LazyYouTube videoId="s2-osIOjOy8" title="Kennedy Concrete Expands to Brevard County" />
-                  <h2 className="text-light">
-                    Lonnie, General Manager, Orlando and Brevard
-                  </h2>
-                </div>
-                <div
-                  className="col-md-6 col-12 d-flex flex-column justify-content-center align-items-center video-section"
-                  id="video-section"
-                >
-                  <LazyYouTube videoId="Nln6hcJJSyg" title="Wrapping Up A Commercial Job for Salem" />
-
-                  <h2 className="text-light">
-                    Jeff, General Manager, Tampa and Ocala
-                  </h2>
-                </div>
-              </div>
-              <div className="row d-flex">
-                <div
-                  className="col-md-6 col-12 d-flex flex-column justify-content-center align-items-center video-section"
-                  id="video-section"
-                >
-                  <LazyYouTube videoId="rmxda74qUg8" title="Meet our Plant Manager, Latisha!" />
-
-                  <h2 className="text-light text-center">
-                    Latisha, Plant Manager, Orlando
-                  </h2>
-                </div>
-                <div
-                  className="col-md-6 col-12 d-flex flex-column justify-content-center align-items-center video-section"
-                  id="video-section"
-                >
-                  <LazyYouTube videoId="SEReegQnG6w" title="Exclusive Discounts for First Responders" />
-
-                  <h2 className="text-light text-center">
-                    Andy, Dispatch Manager
-                  </h2>
-                </div>
+                {teamVideos.map((video, index) => (
+                  <div
+                    key={index}
+                    className="col-md-6 col-12 d-flex flex-column justify-content-center align-items-center video-section"
+                    id="video-section"
+                  >
+                    <LazyYouTube videoId={video.videoId} />
+                    <h2 className="text-light">{video.title}</h2>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

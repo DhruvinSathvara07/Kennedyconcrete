@@ -781,7 +781,7 @@ ul {
   overflow: hidden !important;
   color: #fff !important;
   background: #0c0c18 !important;
-  /* Jaambli background */
+  padding: 120px 90px !important;
 }
 
 .slide {
@@ -1164,14 +1164,36 @@ ul {
   justify-content: space-around;
   align-items: center;
 } */
+.video-container {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.video-container iframe {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  /* Maintains YouTube's aspect ratio */
+  /* border-radius: 10px; */
+  display: block;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .video-container {
+    max-width: 100%;
+    padding: 0 15px;
+  }
+}
 
 .video-thumbnail {
   position: relative;
   width: 100%;
-  max-width: 550px;
+  /* max-width: 550px; */
   height: auto;
   cursor: pointer;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   overflow: hidden;
 }
 
@@ -1179,28 +1201,31 @@ ul {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 10px;
+  /* border-radius: 10px; */
 }
 
 .play-button {
+  width: 68px;
+  height: 48px;
+  /* border: 2px solid white; */
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.6);
-  border-radius: 50%;
+  background-color: var(--off-red);
+  border-radius: 12px 12px 12px 12px !important;
   padding: 20px 25px;
   transition: background 0.3s ease;
 }
 
 .play-button::before {
   content: "▶";
-  font-size: 36px;
+  display: flex;
+  justify-content: center;
+  margin-top: 6px;
+  align-items: center;
+  font-size: 24px;
   color: white;
-}
-
-.play-button:hover {
-  background: rgba(0, 0, 0, 0.8);
 }
 
 
