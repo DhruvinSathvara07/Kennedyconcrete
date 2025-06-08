@@ -25,7 +25,8 @@ const BlogCard = ({ searchQuery = "", isSearchPage = false }) => {
     try {
       setLoading(true);
       const response = await axios.get("/JSON/Blogs.json");
-      setBlog(response.data || []);
+      console.log(response.data);
+      setBlog(response.data);
     } catch (error) {
       console.error("Error fetching blog data:", error);
       setBlog([]);
