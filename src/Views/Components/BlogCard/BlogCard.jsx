@@ -1,14 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
-import Blog1 from "../../../assets/img/Blogs1.png";
 import Button from "../Buttons/Button";
 import Blogmeta from "../../Pages/About/Blogs/Blogmeta";
 import axios from "axios";
 
-const BlogCard = () => {
+const BlogCard = ({ searchQuery = "", isSearchPage = false }) => {
   const [blog, setBlog] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const blogsPerPage = 10;
-  const topRef = useRef(null); // Step 1: ref to scroll top
+  const [filteredBlogs, setFilteredBlogs] = useState([]);
+  const [lastSearchResults, setLastSearchResults] = useState([]);
+
+  const [currentPage, setCurrentPage] = useState(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const page = urlParams.get('page');
+    return page ? parseInt(page, 10) : 1;
+  });
+
+  const blogsPerPage = isSearchPage ? 6 : 10; // Show fewer items on search page
+  const topRef = useRef(null);
 
   const fetchingData = async () => {
     try {
@@ -20,77 +27,140 @@ const BlogCard = () => {
     }
   };
 
+  // Filter blogs based on search query
+  useEffect(() => {
+    if (searchQuery.trim() === "") {
+      setFilteredBlogs(lastSearchResults);
+    } else {
+      const filtered = blog.filter(item =>
+        item.blogtitle?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.blogtext?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.tags?.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+      );
+      setFilteredBlogs(filtered);
+      setLastSearchResults(filtered);
+    }
+    setCurrentPage(1);
+  }, [searchQuery, blog]);
+
   useEffect(() => {
     fetchingData();
+    window.scrollTo(0, 0);
   }, []);
 
-  const scrollToTop = () => {
-    if (topRef.current) {
-      topRef.current.scrollIntoView({ behavior: "smooth" }); // Step 2: scroll
-    }
-  };
-
-  const totalPages = Math.ceil(blog.length / blogsPerPage);
+  const blogsToShow = isSearchPage ? filteredBlogs : blog;
+  const totalPages = Math.ceil(blogsToShow.length / blogsPerPage);
   const startIndex = (currentPage - 1) * blogsPerPage;
   const endIndex = startIndex + blogsPerPage;
-  const currentBlogs = blog.slice(startIndex, endIndex);
+  const currentBlogs = blogsToShow.slice(startIndex, endIndex);
 
   const goToNextPage = () => {
     if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-      scrollToTop();
+      const nextPage = currentPage + 1;
+      if (isSearchPage) {
+        setCurrentPage(nextPage);
+      } else {
+        window.location.href = `${window.location.pathname}?page=${nextPage}`;
+      }
     }
   };
 
   const goToPrevPage = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-      scrollToTop();
+      const prevPage = currentPage - 1;
+      if (isSearchPage) {
+        setCurrentPage(prevPage);
+      } else {
+        window.location.href = `${window.location.pathname}?page=${prevPage}`;
+      }
     }
   };
 
   const handlePageClick = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    scrollToTop();
+    if (isSearchPage) {
+      setCurrentPage(pageNumber);
+    } else {
+      window.location.href = `${window.location.pathname}?page=${pageNumber}`;
+    }
   };
 
-  return (
-    <>
-      <div ref={topRef}></div> {/* Ref anchor point */}
-      {/* Blog Cards */}
-      {currentBlogs.map((item, index) => (
-        <div className="padding mb-5" key={index}>
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="blog-container">
-                <img
-                  src={item.blogimg}
-                  alt={item.blogtitle || "Blog image"}
-                  className="img-fluid"
-                />
-              </div>
-              <div className="blog-content">
-                <div className="d-flex">
-                  <Blogmeta />
-                </div>
-                <h2 className="blog-title mt-3">{item.blogtitle}</h2>
-                <p className="blog-text mt-4">{item.blogtext}</p>
-                <div className="mt-4">
-                  <Button
-                    bgColor="#de0b18"
-                    textColor="#fff"
-                    text="READ MORE"
-                    icon={false}
-                  />
-                </div>
-              </div>
+  // Mini card component for search results - only image, title, and date
+  const MiniCard = ({ item }) => (
+    <div className="col-md-6 mb-4 blog-mini-card border border-0 rounded-0">
+      <div className="card h-100">
+        <img
+          src={item.blogimg}
+          alt={item.blogtitle || "Blog image"}
+          className="card-img-top"
+        />
+        <div className="card-body d-flex flex-column" id="card">
+          <h5 className="card-title">{item.blogtitle}</h5>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Regular card component
+  const RegularCard = ({ item }) => (
+    <div className="padding mb-5">
+      <div className="row">
+        <div className="col-lg-12">
+          <div className="blog-container">
+            <img
+              src={item.blogimg}
+              alt={item.blogtitle || "Blog image"}
+              className="img-fluid"
+            />
+          </div>
+          <div className="blog-content">
+            <div className="d-flex">
+              <Blogmeta />
+            </div>
+            <h2 className="blog-title mt-3">{item.blogtitle}</h2>
+            <p className="blog-text mt-4">{item.blogtext}</p>
+            <div className="mt-4">
+              <Button
+                bgColor="#de0b18"
+                textColor="#fff"
+                text="READ MORE"
+                icon={false}
+              />
             </div>
           </div>
         </div>
-      ))}
-      {blog.length > blogsPerPage && (
+      </div>
+    </div>
+  );
+
+  return (
+    <>
+      <div ref={topRef}></div>
+
+      {/* No results message */}
+      {isSearchPage && blogsToShow.length === 0 && (
+        <div className="no-results text-center py-5">
+          <h4>No blogs found</h4>
+          <p>Try searching for blogs using different keywords.</p>
+        </div>
+      )}
+
+      {/* Render cards based on view type */}
+      {isSearchPage ? (
+        <div className="row">
+          {currentBlogs.map((item, index) => (
+            <MiniCard key={index} item={item} />
+          ))}
+        </div>
+      ) : (
+        currentBlogs.map((item, index) => (
+          <RegularCard key={index} item={item} />
+        ))
+      )}
+
+      {/* Pagination */}
+      {blogsToShow.length > blogsPerPage && (
         <div className="col-12">
-          <div className="d-flex align-items-center mt-4 mb-5">
+          <div className="d-flex align-items-center justify-content-center mt-4 mb-5">
             {currentPage > 1 && (
               <button
                 className="btn me-2 pagination-button"
@@ -105,7 +175,7 @@ const BlogCard = () => {
               return (
                 <button
                   key={pageNumber}
-                  className="btn me-2 pagination-button"
+                  className={`btn me-2 pagination-button ${currentPage === pageNumber ? 'active' : ''}`}
                   onClick={() => handlePageClick(pageNumber)}
                 >
                   {pageNumber}

@@ -1,9 +1,29 @@
-import React from "react";
-import Blog1 from "../../../../assets/img/Blogs1.png";
-import Button from "../../../Components/Buttons/Button";
-import Blogmeta from "./Blogmeta";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import BlogCard from "../../../Components/BlogCard/BlogCard";
+
 const BlogSection1 = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      // Navigate to search results page with query parameter
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch(e);
+    }
+  };
+
   return (
     <>
       <section>
@@ -15,16 +35,31 @@ const BlogSection1 = () => {
               </div>
               <div className="col-xxl-4 col-lg-5">
                 <div className="slidebar-area">
-                  <form>
+                  <form onSubmit={handleSearch}>
                     <label htmlFor="search" className="search-label">
                       Search
                     </label>
                     <div className="search-underline"></div>
                     <div className="d-flex mt-3">
-                      <input type="text" className="inputarea" />
-                      <button className="search-btn">Search</button>
+                      <input
+                        type="text"
+                        className="inputarea"
+                        id="search"
+                        value={searchQuery}
+                        onChange={handleInputChange}
+                        onKeyPress={handleKeyPress}
+                      // placeholder="Search blogs..."
+                      />
+                      <button
+                        type="submit"
+                        className="search-btn"
+                        disabled={!searchQuery.trim()}
+                      >
+                        Search
+                      </button>
                     </div>
                   </form>
+
                 </div>
               </div>
             </div>

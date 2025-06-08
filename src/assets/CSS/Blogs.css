@@ -236,6 +236,18 @@
   background-color: #000 !important;
 }
 
+/*  */
+.blog-mini-card {
+  padding: 0 12px !important;
+  width: 437px !important;
+  border-radius: 0px !important;
+}
+
+#card {
+  background-color: #f3f3f3;
+  padding: 30px !important;
+}
+
 @media (max-width:767px) {
   .blog-content {
     padding: 30px 20px !important;

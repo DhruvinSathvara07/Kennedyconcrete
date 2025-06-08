@@ -25,6 +25,7 @@ import Login from "./Views/Pages/Login/Login";
 import Location from "./Views/Pages/Locations/Orlando/Location";
 import Blogs from "./Views/Pages/About/Blogs/Blogs";
 import BlogCard from "./Views/Components/BlogCard/BlogCard";
+import SearchResults from "./Views/Pages/About/Blogs/SearchResults";
 function App() {
   return (
     <>
@@ -44,7 +45,9 @@ function App() {
 
                   {/* AboutPage */}
                   <Route path="/blog" element={<Blogs />} />
-                  <Route path="/blogs/:pageNumber" element={<BlogCard />} />
+                  {/* <Route path="/blogs/:pageNumber" element={<BlogCard />} /> */}
+                  <Route path="/blog/page/:page" element={<BlogCard />} />
+                  <Route path="/search" element={<SearchResults />} />
                   <Route path="/driver-jobs" element={<Driver />} />
 
                   {/* ServicePage */}

@@ -28,6 +28,12 @@ const Blogmeta = () => {
                 <a href="#" className="icon-container">
                   <i class={item.icon}></i>
                   {item.text}
+
+                </a>
+                <a href="#" className="icon-container">
+                  <i class={item.icon}></i>
+                  {item.text}
+
                 </a>
               </div>
             </div>
