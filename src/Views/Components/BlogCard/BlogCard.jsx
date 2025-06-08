@@ -7,30 +7,63 @@ const BlogCard = ({ searchQuery = "", isSearchPage = false }) => {
   const [blog, setBlog] = useState([]);
   const [filteredBlogs, setFilteredBlogs] = useState([]);
   const [lastSearchResults, setLastSearchResults] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const [currentPage, setCurrentPage] = useState(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const page = urlParams.get('page');
-    return page ? parseInt(page, 10) : 1;
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const page = urlParams.get('page');
+      return page ? parseInt(page, 10) : 1;
+    }
+    return 1;
   });
 
-  const blogsPerPage = isSearchPage ? 6 : 10; // Show fewer items on search page
+  const blogsPerPage = isSearchPage ? 6 : 10;
   const topRef = useRef(null);
 
   const fetchingData = async () => {
     try {
-      const response = await axios.get("/JSON/Blogs.json");
-      setBlog(response.data);
+      setLoading(true);
+      setError(null);
+
+      // Try different possible paths for the JSON file
+      let response;
+      try {
+        response = await axios.get("/JSON/Blogs.json");
+      } catch (err) {
+        // If /JSON/Blogs.json fails, try other common paths
+        try {
+          response = await axios.get("/public/JSON/Blogs.json");
+        } catch (err2) {
+          try {
+            response = await axios.get("./JSON/Blogs.json");
+          } catch (err3) {
+            throw new Error("Could not fetch blog data from any known path");
+          }
+        }
+      }
+
+      if (response.data && Array.isArray(response.data)) {
+        setBlog(response.data);
+      } else {
+        throw new Error("Invalid blog data format");
+      }
     } catch (error) {
       console.error("Error fetching blog data:", error);
+      setError("Failed to load blog data");
       setBlog([]);
+    } finally {
+      setLoading(false);
     }
   };
 
   // Filter blogs based on search query
   useEffect(() => {
+    if (!blog.length) return;
+
     if (searchQuery.trim() === "") {
-      setFilteredBlogs(lastSearchResults);
+      setFilteredBlogs(lastSearchResults.length ? lastSearchResults : blog);
     } else {
       const filtered = blog.filter(item =>
         item.blogtitle?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -45,7 +78,9 @@ const BlogCard = ({ searchQuery = "", isSearchPage = false }) => {
 
   useEffect(() => {
     fetchingData();
-    window.scrollTo(0, 0);
+    if (typeof window !== 'undefined') {
+      window.scrollTo(0, 0);
+    }
   }, []);
 
   const blogsToShow = isSearchPage ? filteredBlogs : blog;
@@ -60,7 +95,9 @@ const BlogCard = ({ searchQuery = "", isSearchPage = false }) => {
       if (isSearchPage) {
         setCurrentPage(nextPage);
       } else {
-        window.location.href = `${window.location.pathname}?page=${nextPage}`;
+        if (typeof window !== 'undefined') {
+          window.location.href = `${window.location.pathname}?page=${nextPage}`;
+        }
       }
     }
   };
@@ -71,7 +108,9 @@ const BlogCard = ({ searchQuery = "", isSearchPage = false }) => {
       if (isSearchPage) {
         setCurrentPage(prevPage);
       } else {
-        window.location.href = `${window.location.pathname}?page=${prevPage}`;
+        if (typeof window !== 'undefined') {
+          window.location.href = `${window.location.pathname}?page=${prevPage}`;
+        }
       }
     }
   };
@@ -80,11 +119,19 @@ const BlogCard = ({ searchQuery = "", isSearchPage = false }) => {
     if (isSearchPage) {
       setCurrentPage(pageNumber);
     } else {
-      window.location.href = `${window.location.pathname}?page=${pageNumber}`;
+      if (typeof window !== 'undefined') {
+        window.location.href = `${window.location.pathname}?page=${pageNumber}`;
+      }
     }
   };
 
-  // Mini card component for search results - only image, title, and date
+  // Handle image error by providing fallback
+  const handleImageError = (e) => {
+    e.target.src = '/images/placeholder-blog.jpg'; // Add a placeholder image
+    e.target.onerror = null; // Prevent infinite loop
+  };
+
+  // Mini card component for search results
   const MiniCard = ({ item }) => (
     <div className="col-md-6 mb-4 blog-mini-card border border-0 rounded-0">
       <div className="card h-100">
@@ -92,6 +139,8 @@ const BlogCard = ({ searchQuery = "", isSearchPage = false }) => {
           src={item.blogimg}
           alt={item.blogtitle || "Blog image"}
           className="card-img-top"
+          onError={handleImageError}
+          loading="lazy"
         />
         <div className="card-body d-flex flex-column" id="card">
           <h5 className="card-title">{item.blogtitle}</h5>
@@ -110,6 +159,8 @@ const BlogCard = ({ searchQuery = "", isSearchPage = false }) => {
               src={item.blogimg}
               alt={item.blogtitle || "Blog image"}
               className="img-fluid"
+              onError={handleImageError}
+              loading="lazy"
             />
           </div>
           <div className="blog-content">
@@ -132,12 +183,37 @@ const BlogCard = ({ searchQuery = "", isSearchPage = false }) => {
     </div>
   );
 
+  // Loading state
+  if (loading) {
+    return (
+      <div className="text-center py-5">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+        <p className="mt-3">Loading blogs...</p>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="alert alert-danger text-center py-5">
+        <h4>Error loading blogs</h4>
+        <p>{error}</p>
+        <button className="btn btn-primary" onClick={fetchingData}>
+          Try Again
+        </button>
+      </div>
+    );
+  }
+
   return (
     <>
       <div ref={topRef}></div>
 
       {/* No results message */}
-      {isSearchPage && blogsToShow.length === 0 && (
+      {isSearchPage && blogsToShow.length === 0 && !loading && (
         <div className="no-results text-center py-5">
           <h4>No blogs found</h4>
           <p>Try searching for blogs using different keywords.</p>
@@ -148,12 +224,12 @@ const BlogCard = ({ searchQuery = "", isSearchPage = false }) => {
       {isSearchPage ? (
         <div className="row">
           {currentBlogs.map((item, index) => (
-            <MiniCard key={index} item={item} />
+            <MiniCard key={item.id || index} item={item} />
           ))}
         </div>
       ) : (
         currentBlogs.map((item, index) => (
-          <RegularCard key={index} item={item} />
+          <RegularCard key={item.id || index} item={item} />
         ))
       )}
 
