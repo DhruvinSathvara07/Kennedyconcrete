@@ -26,69 +26,42 @@ import Location from "./Views/Pages/Locations/Orlando/Location";
 import Blogs from "./Views/Pages/About/Blogs/Blogs";
 import BlogCard from "./Views/Components/BlogCard/BlogCard";
 import SearchResults from "./Views/Pages/About/Blogs/SearchResults";
+
 function App() {
   return (
-    <>
-      <Router>
-        <Routes>
-          {/* Route without Layout */}
+    <Router>
+      <Routes>
+        {/* Route without Layout */}
+        <Route path="/login" element={<Login />} />
 
-          <Route path="/login" element={<Login />} />
-          {/* All other routes with Layout */}
-          <Route
-            path="*"
-            element={
-              <Layout>
-                <Routes>
-                  {/* HomePage */}
-                  <Route path="/" element={<Home />} />
+        {/* All other routes with Layout */}
+        <Route path="/" element={<Layout><Home /></Layout>} />
 
-                  {/* AboutPage */}
-                  <Route path="/blog" element={<Blogs />} />
-                  {/* <Route path="/blogs/:pageNumber" element={<BlogCard />} /> */}
-                  <Route path="/blog/page/:page" element={<BlogCard />} />
-                  <Route path="/search" element={<SearchResults />} />
-                  <Route path="/driver-jobs" element={<Driver />} />
+        {/* AboutPage */}
+        <Route path="/blog" element={<Layout><Blogs /></Layout>} />
+        <Route path="/blog/page/:page" element={<Layout><BlogCard /></Layout>} />
+        <Route path="/search" element={<Layout><SearchResults /></Layout>} />
+        <Route path="/driver-jobs" element={<Layout><Driver /></Layout>} />
 
-                  {/* ServicePage */}
-                  <Route
-                    path="/concrete-delivery-service"
-                    element={<ConcreteDeliveryService />}
-                  />
-                  <Route path="/sidewalk" element={<Sidewalk />} />
-                  <Route path="/driveway" element={<Driveway />} />
-                  <Route path="/slab" element={<Slab />} />
-                  <Route path="/cell-fill" element={<CellFill />} />
-                  <Route path="/commercial" element={<Commercial />} />
-                  <Route path="/shotcrete" element={<ShotCreate />} />
-                  <Route
-                    path="/decorative-concrete"
-                    element={<DecorativeConcrete />}
-                  />
-                  <Route
-                    path="/construction-building-materials"
-                    element={<Buildingmaterials />}
-                  />
-                  <Route
-                    path="/preferred-contractors"
-                    element={<PreferredContractors />}
-                  />
+        {/* ServicePage */}
+        <Route path="/concrete-delivery-service" element={<Layout><ConcreteDeliveryService /></Layout>} />
+        <Route path="/sidewalk" element={<Layout><Sidewalk /></Layout>} />
+        <Route path="/driveway" element={<Layout><Driveway /></Layout>} />
+        <Route path="/slab" element={<Layout><Slab /></Layout>} />
+        <Route path="/cell-fill" element={<Layout><CellFill /></Layout>} />
+        <Route path="/commercial" element={<Layout><Commercial /></Layout>} />
+        <Route path="/shotcrete" element={<Layout><ShotCreate /></Layout>} />
+        <Route path="/decorative-concrete" element={<Layout><DecorativeConcrete /></Layout>} />
+        <Route path="/construction-building-materials" element={<Layout><Buildingmaterials /></Layout>} />
+        <Route path="/preferred-contractors" element={<Layout><PreferredContractors /></Layout>} />
 
-                  {/* Location */}
-                  {/* <Route path="/orlando" element={<Location />} /> */}
+        {/* HomeownersPage */}
+        <Route path="/instance-quote" element={<Layout><InstantQuote /></Layout>} />
 
-                  {/* HomeownersPage */}
-                  <Route path="/instance-quote" element={<InstantQuote />} />
-
-                  {/* ContactPage */}
-                  <Route path="/contact-us" element={<Contact />} />
-                </Routes>
-              </Layout>
-            }
-          />
-        </Routes>
-      </Router>
-    </>
+        {/* ContactPage */}
+        <Route path="/contact-us" element={<Layout><Contact /></Layout>} />
+      </Routes>
+    </Router>
   );
 }
 
