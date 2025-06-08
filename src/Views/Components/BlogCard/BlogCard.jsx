@@ -8,7 +8,6 @@ const BlogCard = ({ searchQuery = "", isSearchPage = false }) => {
   const [filteredBlogs, setFilteredBlogs] = useState([]);
   const [lastSearchResults, setLastSearchResults] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const [currentPage, setCurrentPage] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -25,33 +24,10 @@ const BlogCard = ({ searchQuery = "", isSearchPage = false }) => {
   const fetchingData = async () => {
     try {
       setLoading(true);
-      setError(null);
-
-      // Try different possible paths for the JSON file
-      let response;
-      try {
-        response = await axios.get("/JSON/Blogs.json");
-      } catch (err) {
-        // If /JSON/Blogs.json fails, try other common paths
-        try {
-          response = await axios.get("/public/JSON/Blogs.json");
-        } catch (err2) {
-          try {
-            response = await axios.get("./JSON/Blogs.json");
-          } catch (err3) {
-            throw new Error("Could not fetch blog data from any known path");
-          }
-        }
-      }
-
-      if (response.data && Array.isArray(response.data)) {
-        setBlog(response.data);
-      } else {
-        throw new Error("Invalid blog data format");
-      }
+      const response = await axios.get("/JSON/Blogs.json");
+      setBlog(response.data || []);
     } catch (error) {
       console.error("Error fetching blog data:", error);
-      setError("Failed to load blog data");
       setBlog([]);
     } finally {
       setLoading(false);
@@ -60,10 +36,8 @@ const BlogCard = ({ searchQuery = "", isSearchPage = false }) => {
 
   // Filter blogs based on search query
   useEffect(() => {
-    if (!blog.length) return;
-
     if (searchQuery.trim() === "") {
-      setFilteredBlogs(lastSearchResults.length ? lastSearchResults : blog);
+      setFilteredBlogs(lastSearchResults);
     } else {
       const filtered = blog.filter(item =>
         item.blogtitle?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -74,7 +48,7 @@ const BlogCard = ({ searchQuery = "", isSearchPage = false }) => {
       setLastSearchResults(filtered);
     }
     setCurrentPage(1);
-  }, [searchQuery, blog]);
+  }, [searchQuery, blog, lastSearchResults]);
 
   useEffect(() => {
     fetchingData();
@@ -125,10 +99,10 @@ const BlogCard = ({ searchQuery = "", isSearchPage = false }) => {
     }
   };
 
-  // Handle image error by providing fallback
+  // Handle image loading errors
   const handleImageError = (e) => {
-    e.target.src = '/images/placeholder-blog.jpg'; // Add a placeholder image
-    e.target.onerror = null; // Prevent infinite loop
+    console.log("Image failed to load:", e.target.src);
+    e.target.style.display = 'none'; // Hide broken image
   };
 
   // Mini card component for search results
@@ -140,7 +114,6 @@ const BlogCard = ({ searchQuery = "", isSearchPage = false }) => {
           alt={item.blogtitle || "Blog image"}
           className="card-img-top"
           onError={handleImageError}
-          loading="lazy"
         />
         <div className="card-body d-flex flex-column" id="card">
           <h5 className="card-title">{item.blogtitle}</h5>
@@ -160,7 +133,6 @@ const BlogCard = ({ searchQuery = "", isSearchPage = false }) => {
               alt={item.blogtitle || "Blog image"}
               className="img-fluid"
               onError={handleImageError}
-              loading="lazy"
             />
           </div>
           <div className="blog-content">
@@ -183,7 +155,6 @@ const BlogCard = ({ searchQuery = "", isSearchPage = false }) => {
     </div>
   );
 
-  // Loading state
   if (loading) {
     return (
       <div className="text-center py-5">
@@ -195,25 +166,12 @@ const BlogCard = ({ searchQuery = "", isSearchPage = false }) => {
     );
   }
 
-  // Error state
-  if (error) {
-    return (
-      <div className="alert alert-danger text-center py-5">
-        <h4>Error loading blogs</h4>
-        <p>{error}</p>
-        <button className="btn btn-primary" onClick={fetchingData}>
-          Try Again
-        </button>
-      </div>
-    );
-  }
-
   return (
     <>
       <div ref={topRef}></div>
 
       {/* No results message */}
-      {isSearchPage && blogsToShow.length === 0 && !loading && (
+      {isSearchPage && blogsToShow.length === 0 && (
         <div className="no-results text-center py-5">
           <h4>No blogs found</h4>
           <p>Try searching for blogs using different keywords.</p>
@@ -224,12 +182,12 @@ const BlogCard = ({ searchQuery = "", isSearchPage = false }) => {
       {isSearchPage ? (
         <div className="row">
           {currentBlogs.map((item, index) => (
-            <MiniCard key={item.id || index} item={item} />
+            <MiniCard key={index} item={item} />
           ))}
         </div>
       ) : (
         currentBlogs.map((item, index) => (
-          <RegularCard key={item.id || index} item={item} />
+          <RegularCard key={index} item={item} />
         ))
       )}
 
