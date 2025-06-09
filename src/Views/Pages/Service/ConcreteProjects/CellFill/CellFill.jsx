@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Hero from "../../../../Components/Hero/Hero";
 import VideoCard from "../../../../Components/VideoCard/VideoCard";
+import axios from "axios";
 
 const CellFill = () => {
+  const [cellfill, setCellfill] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/cellfill");
+      setCellfill(response.data[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div>
       <Hero title={"Cell Fill"} />
@@ -10,11 +26,9 @@ const CellFill = () => {
       <VideoCard
         padding={"mt-0 mb-4"}
         video_link={"https://www.youtube.com/embed/XnAWH3H8HxM"}
-        video_text={"CELL FILL"}
-        video_title={"Lightweight Concrete"}
-        video_para={
-          "There are many types of lightweight concretes. Structural lightweight concrete: a mixture of portland cement, water, fine (sand) aggregates, and expanded clay, shale, or slate coarse aggregates. While normal-weight concrete mixes typically weigh 145 to 155 pcf, lightweight concrete typically weighs 110 to 115 pcf. Structural lightweight concrete commonly has 28-day compression strengths comparable to normal-weight concretes."
-        }
+        video_text={cellfill.title}
+        video_title={cellfill.sub_title}
+        video_para={cellfill.para}
       />
     </div>
   );

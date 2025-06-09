@@ -1,26 +1,27 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 const ContactMap = () => {
   const iframe =
     "https://www.google.com/maps/d/embed?mid=1bG31d7cgIIW4g2-JDF1zMo8VAcO8jBI&ehbc=2E312F";
 
-  const contactData = [
-    {
-      location: "Orlando",
-      phone: "407-708-9175",
-      email: "uskennedyorlando@cemex.com",
-    },
-    {
-      location: "Tampa",
-      phone: "813-565-3161",
-      email: "uskennedytampa@cemex.com",
-    },
-    {
-      location: "Brevard",
-      phone: "321-878-8104",
-      email: "uskennedybrevard@cemex.com",
-    },
-  ];
+  // const contactData = [
+  //   {
+  //     location: "Orlando",
+  //     phone: "407-708-9175",
+  //     email: "uskennedyorlando@cemex.com",
+  //   },
+  //   {
+  //     location: "Tampa",
+  //     phone: "813-565-3161",
+  //     email: "uskennedytampa@cemex.com",
+  //   },
+  //   {
+  //     location: "Brevard",
+  //     phone: "321-878-8104",
+  //     email: "uskennedybrevard@cemex.com",
+  //   },
+  // ];
   const socialLinks = [
     { name: "Facebook", iconClass: "fa-facebook", url: "#" },
     { name: "Twitter", iconClass: "fa-x-twitter", url: "#" },
@@ -28,6 +29,22 @@ const ContactMap = () => {
     { name: "Instagram", iconClass: "fa-instagram", url: "#" },
     { name: "LinkedIn", iconClass: "fa-linkedin", url: "#" },
   ];
+
+  const [contact, setContact] = useState([]);
+  console.log(contact);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/contact");
+      setContact(response.data[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -51,21 +68,18 @@ const ContactMap = () => {
               </div>
               <div className="col-lg-6 map-container">
                 <div className="map-content">
-                  <h2 className="text-uppercase mb-3">Connect With Us</h2>
+                  <h2 className="text-uppercase mb-3">
+                    {contact.contact_title}
+                  </h2>
                   <h1 className="connect-title mb-3">
-                    Contact Kennedy Concrete
+                    {contact.contact_secondtitle}
                   </h1>
                   <div>
                     <p className="connect-para mb-3">
-                      At Kennedy Concrete, we’re committed to providing
-                      exceptional service and high-quality concrete solutions
-                      for projects of all sizes. Whether you’re a contractor, a
-                      homeowner, or a business in need of concrete delivery,
-                      we’re here to assist you every step of the way.
+                      {contact.contact_paraone}
                     </p>
                     <p className="connect-para mb-3">
-                      Our team is ready to answer your questions and ensure your
-                      project runs smoothly from start to finish.
+                      {contact.contact_paratwo}
                     </p>
                   </div>
 
@@ -84,16 +98,14 @@ const ContactMap = () => {
                   </div>
 
                   <div className="cards mt-5">
-                    {contactData.map((contact, index) => (
+                    {contact?.locations?.map((item, index) => (
                       <div key={index}>
-                        <h6 className="mb-2">{contact.location}</h6>
+                        <h6 className="mb-2">{item.location}</h6>
                         <p className="mb-2 contact-phone">
-                          <a href={`tel:${contact.phone}`}>{contact.phone}</a>
+                          <a href={`tel:${item.phone}`}>{item.phone}</a>
                         </p>
                         <p>
-                          <a href={`mailto:${contact.email}`}>
-                            {contact.email}
-                          </a>
+                          <a href={`mailto:${item.email}`}>{item.email}</a>
                         </p>
                       </div>
                     ))}

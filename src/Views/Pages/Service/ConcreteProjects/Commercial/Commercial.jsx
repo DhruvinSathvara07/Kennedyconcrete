@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Hero from "../../../../Components/Hero/Hero";
 import VideoCard from "../../../../Components/VideoCard/VideoCard";
+import axios from "axios";
 
 const Commercial = () => {
+  const [commercial, setCommercial] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/commercial");
+      setCommercial(response.data[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       <Hero title={"Commercial"} />
@@ -10,27 +26,18 @@ const Commercial = () => {
       <VideoCard
         padding={"mt-5 mb-4"}
         video_link={"https://www.youtube.com/embed/Nln6hcJJSyg"}
-        video_text={"Commercial"}
-        video_title={"Ready Mix Concrete Supplier"}
+        video_text={commercial.title}
+        video_title={commercial.sub_title}
         video_para={
-          <>
-            <p>
-              Commercial concrete can be broadly defined as concrete used to
-              build or enhance business facilities, such as industrial
-              buildings, warehouses, retail stores and even restaurants. To
-              enhance the look of commercial concrete consider using color.
-              Please refer to color options.
-            </p>
-            <p className="mt-3">
-              To add to the durability and reduce early concrete shrinkage
-              cracking consider using a concrete mix that has fiber added. A
-              concrete path for pedestrians at the side of the road, may also
-              include paths, or walkways. To enhance the look of a concrete
-              sidewalk consider using color. Please refer to color options. To
-              add to the durability and reduce early concrete shrinkage cracking
-              consider using a concrete mix that has fiber added.
-            </p>
-          </>
+          Array.isArray(commercial?.para) ? (
+            <>
+              {commercial.para.map((text, idx) => (
+                <p key={idx} className={idx === 1 ? "mt-3" : ""}>
+                  {text}
+                </p>
+              ))}
+            </>
+          ) : null
         }
       />
     </>

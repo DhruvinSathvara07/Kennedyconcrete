@@ -1,6 +1,25 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 const About = () => {
+  const [showMore, setShowMore] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/buildingmaterials/about"
+      );
+      setShowMore(response.data[0]);
+      console.log(response.data[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       <section>
@@ -22,85 +41,39 @@ const About = () => {
               </div>
               <div className="col-lg-6 col-md-6">
                 <div className="about">
-                  <h2 className="about-title">KENNEDY CONCRETE</h2>
+                  <h2 className="about-title">{showMore.about_title}</h2>
 
-                  <h1 className="mt-3">
-                    High-Quality Building Materials for Your Florida
-                    Construction Projects
-                  </h1>
+                  <h1 className="mt-3">{showMore.heading}</h1>
 
-                  <p className="mt-4">
-                    At Kennedy Concrete, we provide top-notch building materials
-                    tailored for your projects. Whether you’re working on
-                    residential improvements or non-spec commercial jobs, we
-                    make the construction process seamless and stress-free.
-                  </p>
+                  <p className="mt-4">{showMore.description}</p>
 
                   <div className="packges mt-5">
                     <div className="grid">
-                      <div className="wallpackges" id="packages">
-                        <h4>
-                          <strong>Wall Packages</strong>
-                        </h4>
+                      {showMore?.packages?.map((pkg, index) => (
+                        <div
+                          className={
+                            index === 0 ? "wallpackges" : "slabpackges"
+                          }
+                          id="packages"
+                          key={index}
+                        >
+                          <h4>
+                            <strong>{pkg?.title || "Untitled Package"}</strong>
+                          </h4>
 
-                        <p>Build durable, lasting walls with:</p>
+                          <p>
+                            {pkg?.description || "No description available."}
+                          </p>
 
-                        <ul className="list">
-                          <li>
-                            <p>Masonry Cementp </p>
-                          </li>
-                          <li>
-                            <p>Sand</p>
-                          </li>
-                          <li>
-                            <p>Rebar</p>
-                          </li>
-                          <li>
-                            <p>Precast Lintels & Sills</p>
-                          </li>
-                          <li>
-                            <p>Concrete Block</p>
-                          </li>
-                          <li>
-                            <p>Wall Reinforcement</p>
-                          </li>
-                          <li>
-                            <p>Premix Mortar</p>
-                          </li>
-                          <li>
-                            <p>Truss Straps</p>
-                          </li>
-                          <li>
-                            <p>Poly (Plastic Sheeting)</p>
-                          </li>
-                        </ul>
-                      </div>
-                      <div className="slabpackges" id="packages">
-                        <h4>
-                          <strong>Slab Packages</strong>
-                        </h4>
-                        <p>
-                          Lay a strong foundation with premium materials such
-                          as:
-                        </p>
-                        <ul className="list">
-                          <li>
-                            <p>Steel Mesh</p>
-                          </li>
-                          <li>
-                            <p>Rebar</p>
-                          </li>
-                          <li>
-                            <p>Foundation Chairs</p>
-                          </li>
-                          <li>
-                            <p>Bar Ties</p>
-                          </li>
-                          <li>
-                            <p>Rebar Caps</p>
-                          </li>
-                        </ul>
-                      </div>
+                          <ul className="list">
+                            {pkg?.items?.map((item, idx) => (
+                              <li key={idx}>
+                                <p>{item || "No item"}</p>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>

@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Hero from "../../../../Components/Hero/Hero";
 import VideoCard from "../../../../Components/VideoCard/VideoCard";
+import axios from "axios";
 const Sidewalk = () => {
+  const [sidewalkData, setsideWalk] = useState([]);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/sidewalk");
+      setsideWalk(response.data[0]);
+      // console.log(response.data[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       <Hero title={"Sidewalk"} />
@@ -10,11 +26,9 @@ const Sidewalk = () => {
         padding={"mt-5 mb-5"}
         className="d-flex justify-content-center align-items-center"
         video_link={"https://www.youtube.com/embed/5zbd0QCdKm8"}
-        video_text={"SIDEWALK"}
-        video_title={"Elevate Your Sidewalk with Kennedy Concrete Solutions"}
-        video_para={
-          "Our ready mix concrete delivery service means no more waiting around and more time spent working. We deliver to your construction site the optimal balance of efficiency and quality. Our seasoned staff takes care of everything, so you don’t have to think about issues like delivery or mixing proportions.Our fleet of well-maintained, specialized vehicles driven by trained professionals guarantees on-time, error-free delivery that fits your schedule perfectly."
-        }
+        video_text={sidewalkData.title}
+        video_title={sidewalkData.sub_title}
+        video_para={sidewalkData.para}
       />
     </>
   );

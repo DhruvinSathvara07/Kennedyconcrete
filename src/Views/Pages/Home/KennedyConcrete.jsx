@@ -1,15 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import img from "../../../assets/img/about.png";
 import Button from "../../../Views/Components/Buttons/Button";
 import img2 from "../../../assets/img/Kennedy_Tampa.png";
 import img3 from "../../../assets/img/Kennedy_Orlando.png";
 import img4 from "../../../assets/img/Kennedy_Brevard-1.png";
+import axios from "axios";
 const KennedyConcrete = () => {
   const locationData = [
     { id: 1, img: img2, alt: "Orlando" },
     { id: 2, img: img3, alt: "Tampa" },
     { id: 3, img: img4, alt: "Brevard" },
   ];
+  const [aboutData, setAboutData] = useState([]);
+  // console.log(aboutData, "aboutData");
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/about");
+      setAboutData(response.data[0]);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -29,24 +45,14 @@ const KennedyConcrete = () => {
               </div>
 
               <div className="col-lg-6 col-md-6 Kennedy-Concrete">
-                <h2 className="text-danger fw-bold">Kennedy Concrete</h2>
+                <h2 className="text-danger fw-bold">{aboutData.aboutTitle}</h2>
                 {/* mb-3 ms-4 ms-md-5 ms-lg-5 */}
-                <h1 className="display-6">Your Local Concrete Experts</h1>
-                <p className="text">
-                  At Kennedy Concrete, we are committed to providing top-quality
-                  concrete delivery services throughout Orlando, Tampa, and
-                  Brevard.
-                </p>
-                <p className="text">
-                  Whether you are working on a residential driveway, a
-                  commercial foundation, or an industrial structure, our team
-                  ensures timely and efficient delivery of the best concrete
-                  mixes. Trust Kennedy Concrete for all your concrete needs and
-                  experience unparalleled service and quality.
-                </p>
+                <h1 className="display-6">{aboutData.aboutSubTitle}</h1>
+                <p className="text">{aboutData.paraone}</p>
+                <p className="text">{aboutData.paratwo}</p>
                 <div class="container-fluid">
                   <h4 id="sec-title">
-                    <strong>Our Locations</strong>
+                    <strong>{aboutData.locationtitle}</strong>
                   </h4>
                   <div className="row text-center mt-4">
                     {locationData.map((location) => (

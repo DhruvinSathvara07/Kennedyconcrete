@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Hero from "../../../../Components/Hero/Hero";
 import VideoCard from "../../../../Components/VideoCard/VideoCard";
+import axios from "axios";
 const ShotCreate = () => {
+  const [ShotCreate, setShotCreate] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/shotcreate");
+      setShotCreate(response.data[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div>
       <Hero title={"Shot Create"} />
@@ -10,8 +26,8 @@ const ShotCreate = () => {
         padding={"mt-5 mb-5"}
         // className="d-flex justify-content-center align-items-center"
         video_link={"https://www.youtube.com/embed/klfxR3wIG8g"}
-        video_text={"Shotcrete"}
-        video_title={"Get the Job Done Quicker with Shotcrete"}
+        video_text={ShotCreate.title}
+        video_title={ShotCreate.sub_title}
       />
     </div>
   );
