@@ -8,6 +8,7 @@ const VideoCard = ({
   btn_text,
   className,
   padding,
+  btn_url,
 }) => {
   return (
     <div>
@@ -44,6 +45,7 @@ const VideoCard = ({
                       textColor="#fff"
                       icon={true}
                       text={btn_text}
+                      href={btn_url}
                     />
                   </div>
                 </div>

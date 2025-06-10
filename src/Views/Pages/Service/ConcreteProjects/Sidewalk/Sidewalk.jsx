@@ -20,15 +20,20 @@ const Sidewalk = () => {
 
   return (
     <>
-      <Hero title={"Sidewalk"} />
+      <Hero
+        backgroundImage={sidewalkData.heroimg}
+        title={sidewalkData.herotitle}
+      />
 
       <VideoCard
         padding={"mt-5 mb-5"}
         className="d-flex justify-content-center align-items-center"
-        video_link={"https://www.youtube.com/embed/5zbd0QCdKm8"}
+        video_link={sidewalkData.video_link}
         video_text={sidewalkData.title}
         video_title={sidewalkData.sub_title}
         video_para={sidewalkData.para}
+        btn_text={sidewalkData.btn_text}
+        btn_url={sidewalkData.btn_link}
       />
     </>
   );

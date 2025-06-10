@@ -21,12 +21,15 @@ const Slab = () => {
 
   return (
     <>
-      <Hero title={"Slab"} />
+      <Hero
+        title={slab.herotitle}
+        backgroundImage={`http://localhost:5000/uploads/${slab.heroimg}`}
+      />
 
       <VideoCard
         className="d-flex justify-content-center align-items-center"
         padding={"mt-5 mb-4"}
-        video_link={"https://www.youtube.com/embed/sBbYbJec758"}
+        video_link={slab.video_link}
         video_text={slab.title}
         video_title={slab.sub_title}
         video_para={slab.para}
