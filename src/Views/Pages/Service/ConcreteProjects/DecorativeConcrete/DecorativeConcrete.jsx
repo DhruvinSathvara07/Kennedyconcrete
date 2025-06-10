@@ -20,12 +20,15 @@ const DecorativeConcrete = () => {
   }, []);
   return (
     <div>
-      <Hero title={"Decorative Concrete"} />
+      <Hero
+        title={decorativeConcrete.herotitle}
+        backgroundImage={`http://localhost:5000/uploads/${decorativeConcrete.heroimg}`}
+      />
 
       <VideoCard
         padding={"mt-3 pt-2 mb-5"}
         // className="d-flex justify-content-center align-items-center"
-        video_link={"https://www.youtube.com/embed/atiJ73LDFXU"}
+        video_link={decorativeConcrete.video_link}
         video_text={decorativeConcrete.title}
         video_title={decorativeConcrete.sub_title}
         video_para={

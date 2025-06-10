@@ -20,12 +20,15 @@ const ShotCreate = () => {
 
   return (
     <div>
-      <Hero title={"Shot Create"} />
+      <Hero
+        title={ShotCreate.herotitle}
+        backgroundImage={`http://localhost:5000/uploads/${ShotCreate.heroimg}`}
+      />
 
       <VideoCard
         padding={"mt-5 mb-5"}
         // className="d-flex justify-content-center align-items-center"
-        video_link={"https://www.youtube.com/embed/klfxR3wIG8g"}
+        video_link={ShotCreate.video_link}
         video_text={ShotCreate.title}
         video_title={ShotCreate.sub_title}
       />

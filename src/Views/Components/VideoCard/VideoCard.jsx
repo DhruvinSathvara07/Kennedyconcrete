@@ -5,7 +5,7 @@ const VideoCard = ({
   video_title,
   video_para,
   video_link,
-  btn_text,
+  text,
   className,
   padding,
   btn_url,
@@ -44,7 +44,7 @@ const VideoCard = ({
                       bgColor="#DE0B18"
                       textColor="#fff"
                       icon={true}
-                      text={btn_text}
+                      text={text}
                       href={btn_url}
                     />
                   </div>

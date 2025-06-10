@@ -21,11 +21,14 @@ const CellFill = () => {
 
   return (
     <div>
-      <Hero title={"Cell Fill"} />
+      <Hero
+        title={cellfill.herotitle}
+        backgroundImage={`http://localhost:5000/uploads/${cellfill.heroimg}`}
+      />
 
       <VideoCard
         padding={"mt-0 mb-4"}
-        video_link={"https://www.youtube.com/embed/XnAWH3H8HxM"}
+        video_link={cellfill.video_link}
         video_text={cellfill.title}
         video_title={cellfill.sub_title}
         video_para={cellfill.para}

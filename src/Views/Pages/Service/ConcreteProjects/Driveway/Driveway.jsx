@@ -21,10 +21,13 @@ const Driveway = () => {
 
   return (
     <div>
-      <Hero title={"Driveway"} />
+      <Hero
+        title={driveway.herotitle}
+        backgroundImage={`http://localhost:5000/uploads/${driveway.heroimg}`}
+      />
       <VideoCard
         padding={"mt-4 pt-3 mb-4"}
-        video_link={"https://www.youtube.com/embed/XnAWH3H8HxM"}
+        video_link={driveway.video_link}
         video_text={driveway?.title}
         video_title={driveway?.sub_title}
         video_para={

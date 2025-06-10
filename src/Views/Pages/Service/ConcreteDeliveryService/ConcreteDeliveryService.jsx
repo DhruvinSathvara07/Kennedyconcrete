@@ -8,12 +8,10 @@ const ConcreteDeliveryService = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:5000/concrete-delivery-service"
-      );
+      const response = await axios.get("http://localhost:5000/delivery");
 
       setConcreteDelivery(response.data[0]);
-      // console.log(response.data[0]);
+      console.log(response.data[0]);
     } catch (error) {
       console.log(error);
     }
@@ -25,14 +23,17 @@ const ConcreteDeliveryService = () => {
 
   return (
     <>
-      <Hero title={"Concrete Delivery Areas"} />
+      <Hero
+        title={concreteDelivery.herotitle}
+        backgroundImage={`http://localhost:5000/uploads/${concreteDelivery.heroimg}`}
+      />
 
       <VideoCard
-        video_link={"https://www.youtube.com/embed/ODh5uw5B9ZQ"}
+        video_link={concreteDelivery.video_link}
         video_text={concreteDelivery.title}
         video_title={concreteDelivery.sub_title}
         video_para={concreteDelivery.para}
-        btn_text={"Quote & Order"}
+        text={concreteDelivery.btn_text}
       />
     </>
   );

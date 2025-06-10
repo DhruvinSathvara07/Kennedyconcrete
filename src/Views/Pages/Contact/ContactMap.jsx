@@ -5,23 +5,6 @@ const ContactMap = () => {
   const iframe =
     "https://www.google.com/maps/d/embed?mid=1bG31d7cgIIW4g2-JDF1zMo8VAcO8jBI&ehbc=2E312F";
 
-  // const contactData = [
-  //   {
-  //     location: "Orlando",
-  //     phone: "407-708-9175",
-  //     email: "uskennedyorlando@cemex.com",
-  //   },
-  //   {
-  //     location: "Tampa",
-  //     phone: "813-565-3161",
-  //     email: "uskennedytampa@cemex.com",
-  //   },
-  //   {
-  //     location: "Brevard",
-  //     phone: "321-878-8104",
-  //     email: "uskennedybrevard@cemex.com",
-  //   },
-  // ];
   const socialLinks = [
     { name: "Facebook", iconClass: "fa-facebook", url: "#" },
     { name: "Twitter", iconClass: "fa-x-twitter", url: "#" },

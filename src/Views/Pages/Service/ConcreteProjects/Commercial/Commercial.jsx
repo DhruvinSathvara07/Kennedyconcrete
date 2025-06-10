@@ -21,24 +21,17 @@ const Commercial = () => {
 
   return (
     <>
-      <Hero title={"Commercial"} />
+      <Hero
+        title={commercial.herotitle}
+        backgroundImage={`http://localhost:5000/uploads/${commercial.heroimg}`}
+      />
 
       <VideoCard
         padding={"mt-5 mb-4"}
-        video_link={"https://www.youtube.com/embed/Nln6hcJJSyg"}
+        video_link={commercial.video_link}
         video_text={commercial.title}
         video_title={commercial.sub_title}
-        video_para={
-          Array.isArray(commercial?.para) ? (
-            <>
-              {commercial.para.map((text, idx) => (
-                <p key={idx} className={idx === 1 ? "mt-3" : ""}>
-                  {text}
-                </p>
-              ))}
-            </>
-          ) : null
-        }
+        video_para={commercial.para}
       />
     </>
   );

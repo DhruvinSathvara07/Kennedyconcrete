@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 const Section1 = () => {
@@ -13,13 +14,16 @@ const Section1 = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch("https://kennedyconcreteapi.onrender.com/form", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        "https://kennedyconcreteapi.onrender.com/form",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
 
       if (response.ok) {
         setSubmitted(true);
@@ -32,6 +36,24 @@ const Section1 = () => {
     }
   };
 
+  const [contractor, setcontractor] = useState();
+
+  const fetchingData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/preferredcontractors"
+      );
+      setcontractor(response.data[0]);
+      console.log(response.data[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchingData();
+  }, []);
+
   return (
     <>
       <section>
@@ -42,101 +64,78 @@ const Section1 = () => {
                 <div className="col-lg-12">
                   <h2 className="text-center contract_title">
                     <strong>
-                      Find Your Expert Concrete Project Team with
+                      {contractor?.blacktext}
                       <span className="d-block d-md-inline d-lg-block">
-                        Kennedy Concrete
+                        {contractor?.red}
                       </span>
                     </strong>
                   </h2>
-                  <p>
-                    Kennedy Concrete is committed to not only supplying
-                    high-quality concrete for your projects but also ensuring
-                    you have the right team to bring those projects to
-                    completion. Our Preferred Concrete Contractors program is
-                    designed to connect you with a network of trusted and
-                    skilled professionals in all aspects of concrete
-                    construction. From pump operators to concrete finishers,
-                    we've got you covered.
-                  </p>
+                  <p>{contractor?.para}</p>
 
                   <h4>
                     <strong>
-                      How It <span>Works</span>:
+                      {contractor?.blacktitle}{" "}
+                      <span>{contractor?.redtitle}</span>:
                     </strong>
                   </h4>
 
                   <ol className="work-list">
                     <li className="list-item">
                       <p>
-                        <strong>Share Your Project Details: </strong>
-                        Use our simple form to provide your basic information
-                        and a brief overview of your project.
+                        <strong>{contractor?.firstlinetitle}: </strong>
+                        {contractor?.firstline}
                       </p>
                     </li>
                     <li className="list-item">
                       <p>
-                        <strong>Personalized Matching: </strong>
-                        Based on your specific needs, Kennedy Concrete will pair
-                        you with the ideal concrete contractors from our vetted
-                        network, including specialists like pump operators and
-                        finishers.
+                        <strong>{contractor?.secondlinetitle}: </strong>
+                        {contractor?.secondline}
                       </p>
                     </li>
                     <li className="list-item">
                       <p>
-                        <strong>Seamless Collaboration:</strong>
-                        With Kennedy providing the concrete, and a curated team
-                        of experts for application and finishing, your project
-                        is set for success from the ground up.
+                        <strong>{contractor?.thirdlinetitle}: </strong>
+                        {contractor?.thirdline}
                       </p>
                     </li>
                   </ol>
 
                   <h4>
                     <strong>
-                      Our <span> Promise</span>:
+                      {contractor?.blacktitleone}
+                      <span> {contractor?.redtitletwo}</span>:
                     </strong>
                   </h4>
 
                   <ul className="work-list list-style">
                     <li className="list-item">
                       <p>
-                        <strong>Comprehensive Expertise:</strong>
-                        Our network includes a wide range of specialists in the
-                        concrete industry, ensuring every phase of your project
-                        is handled with expertise.
+                        <strong>{contractor?.line1title}:</strong>
+                        {contractor?.line1}
                       </p>
                     </li>
                     <li className="list-item">
                       <p>
-                        <strong>Quality at Every Step: </strong>
-                        Kennedy Concrete supplies top-tier concrete to guarantee
-                        the foundation of your project meets the highest
-                        standards, complemented by exceptional workmanship from
-                        our preferred contractors.
+                        <strong>{contractor?.line2title}: </strong>
+                        {contractor?.line2}
                       </p>
                     </li>
                     <li className="list-item">
                       <p>
-                        <strong>Trust and Reliability:</strong>
-                        All contractors in our program are thoroughly vetted for
-                        insurance, approval, and a proven track record of
-                        successful projects.
+                        <strong>{contractor?.line3title}:</strong>
+                        {contractor?.line3}
                       </p>
                     </li>
                   </ul>
 
                   <h4>
                     <strong>
-                      Connect with <span> Concrete Professionals</span>
+                      {contractor?.blacktextconnect}
+                      <span> {contractor?.redtextconnect}</span>
                     </strong>
                   </h4>
 
-                  <p id="connect-para">
-                    Please fill out the form below, and a representative from
-                    Kennedy Concrete will reach out to discuss your project and
-                    connect you with the right professionals.
-                  </p>
+                  <p id="connect-para">{contractor?.paratwo}</p>
 
                   <div className="container">
                     <div className="container forms-container">
@@ -227,37 +226,26 @@ const Section1 = () => {
                   </div>
                   <h4>
                     <strong>
-                      Your Project Deserves the
-                      <span> Best Team</span>
+                      {contractor?.projectblacktext}
+                      <span> {contractor?.projectredtext}</span>
                     </strong>
                   </h4>
 
-                  <p>
-                    At Kennedy Concrete, we believe in a holistic approach to
-                    your concrete projects. Providing the concrete is just the
-                    start; pairing you with the right team of concrete
-                    contractors for pumping, finishing, and more is our
-                    commitment to ensuring your project's success.
-                  </p>
+                  <p>{contractor?.projectpara}</p>
 
                   <h4>
                     <strong>
-                      Get Matched with <span>Concrete Professionals</span>
+                      {contractor?.getmatchedtext}
+                      <span>{contractor?.concreteredtext}</span>
                     </strong>
                   </h4>
 
-                  <p>
-                    Let us take the guesswork out of assembling your project
-                    team. With Kennedy Concrete's Preferred Concrete Contractors
-                    program, you gain access to a network of professionals ready
-                    to bring quality, efficiency, and excellence to your next
-                    project.
-                  </p>
+                  <p>{contractor?.paratwo}</p>
                   <div className="d-flex justify-content-center align-items-center">
                     <iframe
                       width="1140"
                       height="641"
-                      src="https://www.youtube.com/embed/rVA7zlOFPbc"
+                      src={contractor?.video_link}
                       title="Need Concrete Finishers or Pumpers? Kennedy Concrete Has You Covered!"
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
